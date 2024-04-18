@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
+<body style="background-image: url(bg.jpg);">
+
+  <!-- header section starts  -->
+
+  <header class="header">
+
+      <a href="#" class="logo">
+          <h1 style="color: red;">Slayers</h1>
+      </a>
+
+      <nav class="navbar">
+          <a href="index.html">home</a>
+          <a href="#about">about</a>
+          <a href="#menu">menu</a>
+          <a href="signup.html">Sign up</a>
+
+      </nav>
+  </header>
+  <div class="fullscreen-bg"></div>
+  <header class="Registation">
+      <h1 style="color: white;">
+          Sign In
+      </h1>
+  </header>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous">
+  </script>
+  <form id="loginForm" class="w-25 m-4">
+    <div class="form-floating mb-3">
+        <label for="floatingInput">Email address</label>
+        <br><br><br>
+        <input type="email" class="form-control" id="loginUsername" placeholder="Email" name="floatingInput">
+        
+    </div>
+    <div class="form-floating">
+        <label for="floatingPassword">Password</label>
+        <br><br><br>
+        <input type="password" class="form-control" id="loginPassword" placeholder="Password" name="floatingPassword">
+        
+    </div>
+    <div class="form-text">
+        <a href="#" id="forgotPassword" style="color: azure; font-size: 15px;">Forgot Password?</a>
+    </div>
+    <button type="submit" class="btn btn-primary" style="float: right;" id="submit">Sign In</button>
+    <a href="signup.html"><button type="button" style="float: right;" class="btn btn-primary m-2">SignUp</button></a>
+
+  </form>
+      
+</body>
+<script type="module">
+  //firebase
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyD8tj73FC_SwhRyZRZrlBmIDQs-KcHh5qQ",
+      authDomain: "final-30bd6.firebaseapp.com",
+      databaseURL: "https://final-30bd6-default-rtdb.firebaseio.com",
+      projectId: "final-30bd6",
+      storageBucket: "final-30bd6.appspot.com",
+      messagingSenderId: "247966844070",
+      appId: "1:247966844070:web:9f9874b324da01106b6067",
+      measurementId: "G-LS0SKMSNZ7"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth();
+
+  // Login Form Submission
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission behavior
+      var email = document.getElementById("loginUsername").value;
+      var password = document.getElementById("loginPassword").value;
+
+      // Sign in with email and password
+      signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+              const user = userCredential.user;
+              console.log(user);
+              alert("Login successfully!!");
+              window.location.href = "input.html"; // Redirect to in.html after successful login
+          })
+          .catch((error) => {
+              const errorMessage = error.message;
+              console.log(errorMessage);
+              alert(errorMessage);
+          });
+  });
+
+  // Forgot Password
+  document.getElementById("forgotPassword").addEventListener("click", function(event) {
+      event.preventDefault();
+      var email = document.getElementById("loginUsername").value;
+      if (email) {
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Password reset email sent. Please check your inbox.");
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("Error sending password reset email. Please try again later.");
+            });
+    } else {
+        alert("Please enter your email address.");
+    }
+  });
+
+</script>
+
+</html>

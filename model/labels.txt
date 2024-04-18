@@ -1,0 +1,4 @@
+0 Grassy
+1 Marshy
+2 Rocky
+3 Sandy

@@ -1,0 +1,9 @@
+tensorflow
+keras
+pillow
+numpy
+Flask
+Flask-Cors
+numpy
+Pillow
+Flask
